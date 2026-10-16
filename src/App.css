@@ -1,0 +1,169 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: #f1f3f9;
+  color: #1f2430;
+}
+
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+header h1 { margin: 0; }
+.welcome { margin: 4px 0 16px; color: #555; }
+
+button, select, input {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid #d3d8e6;
+  border-radius: 8px;
+  background: #fff;
+}
+button { cursor: pointer; }
+button:hover { background: #eef1fa; }
+button.primary { background: #4f6df5; border-color: #4f6df5; color: #fff; }
+button.primary:hover { background: #3d5ae0; }
+button.danger { background: #e5484d; border-color: #e5484d; color: #fff; }
+button.danger:hover { background: #cc3a3f; }
+
+.profile, .add, .toolbar, .bulk, .todo {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(20, 30, 70, 0.08);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.profile-form { flex-wrap: wrap; }
+.profile-form input { flex: 1 1 140px; }
+.avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: #4f6df5; color: #fff;
+  display: grid; place-items: center;
+  font-weight: 700; font-size: 1.2rem;
+}
+.profile-info { flex: 1; display: flex; flex-direction: column; font-size: 0.9rem; }
+.profile-info span { color: #666; }
+
+.add { display: flex; gap: 8px; padding: 12px; margin-bottom: 16px; }
+.add input { flex: 1; }
+
+.toolbar {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  justify-content: space-between; align-items: center;
+  padding: 10px 12px; margin-bottom: 8px;
+}
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tabs button.active { background: #4f6df5; border-color: #4f6df5; color: #fff; }
+.badge {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px; padding: 0 7px; font-size: 0.8rem;
+}
+.search { min-width: 180px; }
+
+.bulk {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 8px 12px; margin-bottom: 12px; min-height: 46px;
+  font-size: 0.9rem;
+}
+.bulk label { display: flex; align-items: center; gap: 6px; }
+.bulk input[type='checkbox'], .todo input[type='checkbox'] { padding: 0; width: 18px; height: 18px; }
+
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+
+.todo {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  border: 2px solid transparent;
+}
+.todo.dragging { opacity: 0.4; }
+.todo.drag-over { border-color: #4f6df5; }
+.grip { cursor: grab; color: #aaa; user-select: none; }
+.title { flex: 1; overflow-wrap: anywhere; cursor: text; }
+.title.done { text-decoration: line-through; color: #999; }
+.title-edit { flex: 1; }
+.todo button { border: none; background: transparent; padding: 4px 6px; }
+.todo button:hover { background: #eef1fa; }
+.todo button svg { display: block; color: #555; }
+.star { font-size: 1.3rem; color: #bbb; line-height: 1; }
+.star.on { color: #e5484d; }
+
+.dropdown-btn.s-ToDo { background: #eef1fa; color: #3b4468; }
+.dropdown-btn.s-InProgress { background: #fff3d6; color: #8a5a00; }
+.dropdown-btn.s-Done { background: #dcf5e4; color: #17673c; }
+.todo .dropdown-btn.pill, .dropdown-btn[class*='s-'] { border-color: transparent; font-weight: 600; }
+.todo .dropdown-btn.s-ToDo:hover, .dropdown-btn.s-ToDo:hover { background: #dde3f5; }
+.todo .dropdown-btn.s-InProgress:hover, .dropdown-btn.s-InProgress:hover { background: #ffe7ab; }
+.todo .dropdown-btn.s-Done:hover, .dropdown-btn.s-Done:hover { background: #bfecd0; }
+
+.empty { text-align: center; color: #888; padding: 32px 0; }
+
+@media (max-width: 520px) {
+  .add { flex-wrap: wrap; }
+  .todo { flex-wrap: wrap; }
+}
+
+/* Custom status dropdown */
+.dropdown { position: relative; }
+.dropdown-btn {
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+}
+.dropdown-btn.pill { border-radius: 999px; padding: 4px 10px; font-size: 0.85rem; font-weight: 600; border-color: transparent; }
+.chevron { font-size: 0.75rem; color: #888; transition: transform 0.15s; }
+.chevron.up { transform: rotate(180deg); }
+.dropdown-menu {
+  position: absolute; right: 0; top: calc(100% + 6px);
+  z-index: 20; min-width: 160px;
+  margin: 0; padding: 6px; list-style: none;
+  background: #fff;
+  border: 1px solid #e1e5f0;
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgba(20, 30, 70, 0.18);
+  animation: pop 0.12s ease-out;
+}
+.dropdown-menu li {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 8px;
+  font-size: 0.9rem; cursor: pointer;
+}
+.dropdown-menu li:hover { background: #eef1fa; }
+.dropdown-menu li.selected { font-weight: 600; background: #f4f6fd; }
+.check { margin-left: auto; color: #4f6df5; }
+.add .dropdown-menu, .bulk .dropdown-menu { left: 0; right: auto; }
+@keyframes pop { from { opacity: 0; transform: translateY(-4px) scale(0.97); } to { opacity: 1; transform: none; } }
+
+/* Coloured options */
+.dropdown-menu li { margin-bottom: 2px; }
+.dropdown-menu li:last-child { margin-bottom: 0; }
+.dropdown-menu li.opt-ToDo { background: #eef1fa; color: #3b4468; }
+.dropdown-menu li.opt-InProgress { background: #fff3d6; color: #8a5a00; }
+.dropdown-menu li.opt-Done { background: #dcf5e4; color: #17673c; }
+.dropdown-menu li.opt-ToDo:hover, .dropdown-menu li.opt-ToDo.selected { background: #dde3f5; }
+.dropdown-menu li.opt-InProgress:hover, .dropdown-menu li.opt-InProgress.selected { background: #ffe7ab; }
+.dropdown-menu li.opt-Done:hover, .dropdown-menu li.opt-Done.selected { background: #bfecd0; }
+.dropdown-menu li.selected .check { color: currentColor; }
+
+/* Heart favourite button */
+.todo .star {
+  display: grid; place-items: center;
+  width: 32px; height: 32px; padding: 0;
+  border-radius: 50%;
+  color: #b5bbcf;
+  transition: color 0.15s, background 0.15s, transform 0.15s;
+}
+.todo .star svg { color: inherit; }
+.todo .star:hover { color: #e5484d; background: #fdecec; transform: scale(1.1); }
+.todo .star.on { color: #e5484d; background: #fdecec; }
+.todo .star.on svg { animation: heart-pop 0.3s ease-out; }
+@keyframes heart-pop { 0% { transform: scale(0.6); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
